@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// 用户模型 - 通过Clerk管理
+model User {
+  id            String    @id @default(cuid())
+  clerkId       String    @unique
+  email         String    @unique
+  letters       Letter[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// 收件人模型
+model Recipient {
+  id         String  @id @default(cuid())
+  name       String?
+  email      String
+  letterId   String
+  letter     Letter  @relation(fields: [letterId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// 信件模型
+model Letter {
+  id            String      @id @default(cuid())
+  title         String
+  content       String
+  scheduledDate DateTime    // 预定发送时间
+  status        LetterStatus @default(DRAFT)
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipients    Recipient[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+// 信件状态枚举
+enum LetterStatus {
+  DRAFT       // 草稿
+  SCHEDULED   // 已安排发送
+  SENT        // 已发送
+  DELETED     // 已删除
+}

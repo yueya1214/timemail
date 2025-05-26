@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 时间邮局 - 给未来写一封信
 
-## Getting Started
+时间邮局是一个让用户可以写信给未来的网络应用。用户可以撰写信件，设定未来的发送日期，系统会在指定的日期将这些信件发送给收件人。
 
-First, run the development server:
+## 功能特点
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 用户认证：支持邮箱/密码注册、登录和第三方OAuth登录
+- 信件管理：创建、编辑、查看和删除信件
+- 富文本编辑：支持简单的文本格式化功能
+- 定时发送：在用户指定的日期自动发送信件
+- 多收件人：支持给多个收件人发送同一封信
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 技术栈
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **前端**：React + Next.js 14 + TailwindCSS
+- **认证**：Clerk
+- **数据库**：SQLite (开发环境) / Cloudflare D1 (生产环境)
+- **部署**：Cloudflare Pages + Workers
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 快速开始
 
-## Learn More
+### 前提条件
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18+
+- NPM 或 PNPM
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 安装步骤
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. 克隆仓库
+   ```
+   git clone https://github.com/yourusername/timemail.git
+   cd timemail
+   ```
 
-## Deploy on Vercel
+2. 安装依赖
+   ```
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. 配置环境变量
+   ```
+   cp .env.example .env.local
+   ```
+   填写必要的环境变量，尤其是Clerk认证相关的配置。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. 创建并初始化数据库
+   ```
+   npx prisma migrate dev
+   ```
+
+5. 启动开发服务器
+   ```
+   npm run dev
+   ```
+
+6. 访问 http://localhost:3000
+
+## 部署到Cloudflare
+
+### 前提条件
+
+- Cloudflare账户
+- Wrangler CLI工具
+
+### 部署步骤
+
+1. 安装Wrangler
+   ```
+   npm install -g wrangler
+   ```
+
+2. 登录到Cloudflare
+   ```
+   wrangler login
+   ```
+
+3. 创建D1数据库
+   ```
+   wrangler d1 create timemail
+   ```
+
+4. 修改`wrangler.toml`配置，确保数据库ID正确。
+
+5. 应用数据库迁移
+   ```
+   wrangler d1 migrations apply timemail
+   ```
+
+6. 构建并部署
+   ```
+   npm run build
+   wrangler pages publish .next --project-name timemail
+   ```
+
+## 贡献指南
+
+欢迎提交PR或Issue来帮助改进这个项目！
+
+## 许可证
+
+MIT
