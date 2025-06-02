@@ -1,1 +1,9 @@
- 
+# Wrangler配置文件
+name = "timemail"
+compatibility_date = "2023-12-01"
+
+# 绑定D1数据库
+[[d1_databases]]
+name = "DB"
+database_name = "timemail"
+database_id = "YOUR_D1_DATABASE_ID" # 请替换为您在Cloudflare Dashboard创建的实际D1数据库ID
