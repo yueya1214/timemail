@@ -1,8 +1,7 @@
 'use client';
 
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import DatePickerLib from 'react-datepicker';
-import { format } from 'date-fns';
 import { cn } from '../../lib/utils';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -16,8 +15,6 @@ interface DatePickerProps {
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   ({ value, onChange, label, error, minDate = new Date() }, ref) => {
-    const [isOpen, setIsOpen] = useState(false);
-    
     return (
       <div ref={ref} className="w-full">
         {label && (
@@ -30,8 +27,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           <DatePickerLib
             selected={value}
             onChange={(date: Date | null) => onChange(date)}
-            onCalendarOpen={() => setIsOpen(true)}
-            onCalendarClose={() => setIsOpen(false)}
             minDate={minDate}
             dateFormat="yyyy年MM月dd日"
             className={cn(
@@ -47,3 +42,5 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
   }
 );
+
+DatePicker.displayName = 'DatePicker';

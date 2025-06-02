@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // 获取所有信件
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // 这里应该从D1数据库获取信件
     // 示例响应

@@ -5,8 +5,11 @@ const nextConfig = {
   
   // 确保兼容性
   experimental: {
-    serverComponentsExternalPackages: [],
+    // 已移除过时配置
   },
+  
+  // 服务器外部包
+  serverExternalPackages: [],
   
   // 环境变量
   env: {
