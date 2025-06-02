@@ -3,10 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 // 获取单个信件
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    // 从URL中提取ID参数
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.length - 1];
     
     if (!id) {
       return NextResponse.json({ error: '缺少信件ID' }, { status: 400 });
@@ -23,7 +25,7 @@ export async function GET(
       }
     });
   } catch (error) {
-    console.error(`获取信件 ${params.id} 失败:`, error);
+    console.error('获取信件失败:', error);
     return NextResponse.json({ error: '获取信件失败' }, { status: 500 });
   }
 }
@@ -31,10 +33,13 @@ export async function GET(
 // 更新信件
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    // 从URL中提取ID参数
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.length - 1];
+    
     const data = await request.json();
     
     // 这里应该更新D1数据库中的信件
@@ -48,7 +53,7 @@ export async function PUT(
       }
     });
   } catch (error) {
-    console.error(`更新信件 ${params.id} 失败:`, error);
+    console.error('更新信件失败:', error);
     return NextResponse.json({ error: '更新信件失败' }, { status: 500 });
   }
 }
@@ -56,10 +61,12 @@ export async function PUT(
 // 删除信件
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    // 从URL中提取ID参数
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const id = pathParts[pathParts.length - 1];
     
     // 这里应该从D1数据库删除信件
     // 示例响应
@@ -68,7 +75,7 @@ export async function DELETE(
       deletedId: id
     });
   } catch (error) {
-    console.error(`删除信件 ${params.id} 失败:`, error);
+    console.error('删除信件失败:', error);
     return NextResponse.json({ error: '删除信件失败' }, { status: 500 });
   }
 } 

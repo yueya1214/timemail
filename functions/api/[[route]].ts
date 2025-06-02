@@ -1,8 +1,7 @@
 // Cloudflare Pages Functions API路由处理程序
 // 这个文件会捕获所有 /api/* 路径的请求
-import type { Context } from '@cloudflare/workers-types';
 
-export const onRequest = async (context: Context) => {
+export const onRequest = async (context: any) => {
   // 获取请求路径
   const url = new URL(context.request.url);
   const path = url.pathname;

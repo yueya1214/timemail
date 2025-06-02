@@ -2,11 +2,10 @@
 
 import { Button } from './components/ui/button';
 import Link from 'next/link';
-import { useAuth } from '@clerk/nextjs';
 
 export default function Home() {
-  const { userId, isLoaded } = useAuth();
-  const isSignedIn = isLoaded && !!userId;
+  // 简化认证状态，默认未登录
+  const isSignedIn = false;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -20,10 +19,10 @@ export default function Home() {
               </Link>
             ) : (
               <>
-                <Link href="/sign-in">
+                <Link href="/auth/sign-in">
                   <Button variant="outline">登录</Button>
                 </Link>
-                <Link href="/sign-up">
+                <Link href="/auth/sign-up">
                   <Button>注册</Button>
                 </Link>
               </>
@@ -41,7 +40,7 @@ export default function Home() {
               给明天的自己一个惊喜，给未来的朋友一份祝福，或者留下珍贵的回忆。
             </p>
             <div className="py-8">
-              <Link href={isSignedIn ? "/dashboard/letters/new" : "/sign-up"}>
+              <Link href={isSignedIn ? "/dashboard/letters/new" : "/auth/sign-up"}>
                 <Button size="lg" className="px-8 py-3 text-lg">
                   {isSignedIn ? "写一封新信" : "立即开始"}
                 </Button>
